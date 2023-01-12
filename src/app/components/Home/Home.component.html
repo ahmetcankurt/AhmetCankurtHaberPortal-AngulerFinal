@@ -1,0 +1,130 @@
+<!-- Main News Slider Start -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-7  boxShadow navbar__coursel__Css " style="margin: auto; padding:  0">
+      <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <div class="carousel-inner ">
+          <div *ngFor="let haber of haberler; index as i; first as isFirst; let last = last">
+            <div class="carousel-item  boxShadow" data-bs-interval="2000" *ngIf=" haber.categoryId == 'qhXKKW2MS3rsYxKbT4RJ' ">
+              <img width="50px" [src]="haber.haberResim || 'assets/profil.png'" class="d-block w-100" alt="..."
+                style="height: 500px; " />
+              <div class="carousel-caption  d-md-block">
+                <div style="background-color: #fff; border-radius: 10px; padding: 10px ; color: black; ">
+                  <h3 class=" fw-bold " style="background-color: gold; border-radius: 10px; padding: 10px;"><span>Haber
+                      Başlığı :</span> {{haber.haberBasligi}} </h3>
+                  <button class=" btn btn-outline-warning" (click)="Duzenle(haber,modalDuzenle)">Detay</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item active boxShadow" data-bs-interval="2000">
+            <img src="../../../assets/anaSayfa.jpg" class="d-block w-100" alt="..." style="height: 500px;">
+            <div class="carousel-caption  d-md-block">
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+    <div class="col-lg-5 px-0">
+      <div class="row mx-0">
+        <div class="col-md-6 px-0 nav__di-right"
+          *ngFor="let haber of haberler; index as i; first as isFirst; let last = last">
+          <div class="position-relative overflow-hidden" style="height: 250px;" *ngIf="isFirst || i < 4 ">
+            <!-- hem 4 tane hemde Spor olanı göster-->
+            <img style="height: 100% !important;" [src]="haber.haberResim || 'assets/profil.png'" class="d-block w-100"
+              alt="..." />
+            <div class="overlay">
+              <div class="mb-2">
+                <button class=" btn btn-warning" (click)="Duzenle(haber,modalDuzenle)">Detay</button>
+                <h5 class="mt-2"style="background-color: gold; padding: 8px; font-size: 12px; border-radius: 5px;">{{haber.haberBasligi}}</h5>      
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row" style="margin-bottom: 50px;">
+        <div class="col-md-11 m-auto ">
+          <div class="col-md-3 card-Css shadows_Css"
+            *ngFor="let haber of haberler; index as i; first as isFirst; let last = last">
+            <div class="card" *ngIf="isFirst || i < 12"> <!-- 12 tane haber göster-->
+              <img height="150px"  height="150px" [src]="haber.haberResim || 'assets/profil.png'" class="d-block w-100" alt="... " />
+              <div class="card-body">
+                <h5 class="card-title">Haber Başlığı :<br />{{haber.haberBasligi}} </h5>
+                <p class="card-text">{{haber.haberManseti}}...</p>
+                <p>
+                  Haber Yazan : {{haber.haberYazan}}
+                </p>
+                <button class=" btn btn-outline-warning" (click)="Duzenle(haber,modalDuzenle)">Detay</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Main News Slider End-->
+<!-- Footer Start -->
+<div class="container-fluid bg-black text-white mt-5 py-5 px-sm-3 px-md-5">
+  <div class="container text-center py-5">
+    <div class="d-flex justify-content-center mb-4">
+      <a class="btn btn-light btn-social mr-2" href="https://www.linkedin.com/in/ahmetcankurt07/" target="_blank"><img
+          src="../../../assets/linkedin.svg" alt=""></a>
+      <a class="btn btn-light btn-social mr-2 mx-2" href="https://www.instagram.com/cankurt0047/" target="_blank"><img
+          src="../../../assets/instagram.svg" alt=""></a>
+      <a class="btn btn-light btn-social" href="https://github.com/cankurt0047" target="_blank"><img
+          src="../../../assets/github.svg" alt=""></a>
+    </div>
+
+    <p class="m-0 mx-2">&copy; <a class="text-white font-weight-bold" href="#">© 2022 powered </a>Ahmet CANKURT
+    </p>
+  </div>
+</div>
+<!-- Footer End -->
+
+<!-- Modal -->
+<div class="col-md-12">
+  <div class="modal" tabindex="-1" #modalDuzenle>
+    <div class="modal-dialog">
+      <form [formGroup]="frm" (ngSubmit)="DuzenleKaydet()">
+        <div class="modal-content">
+          <div class="modal-header  text-white" style="background-color: gold;">
+            <h5 class="modal-title">Haber Detay</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Haber Başlığı</label>
+              <input type="text" class="form-control" formControlName="haberBasligi">
+              <label>Haber Manseti</label>
+              <input type="text" class="form-control" formControlName="haberManseti">
+              <label>Haber Kategori</label>
+              <select class="form-control" formControlName="categoryId">
+                <option [value]="kat.uid" *ngFor="let kat of kategoriler">{{kat.kategoriAdi}}</option>
+              </select>
+              <label for="floatingTextarea">Haber Yazisi</label>
+              <div class="form-floating">
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 350px;"
+                  formControlName="haberYazisi"></textarea>
+              
+              </div>
+              <input type="hidden" class="form-control" formControlName="haberKayitTarihi">
+              <input type="hidden" class="form-control" formControlName="uid">
+            </div>
+          </div>
+          
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

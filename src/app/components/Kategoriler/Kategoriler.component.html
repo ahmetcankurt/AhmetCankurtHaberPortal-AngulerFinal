@@ -1,0 +1,79 @@
+<div class="container">
+  <div class="row" *ngIf="uye | async as user">
+    
+    <div class="col-12 mt-5">
+      <h3>Kategori</h3>
+      <button class="btn btn-outline-dark" (click)="Ekle(modalEkle)" [disabled]="user.admin == 0 ">Kategori
+        Ekle</button>
+      <div class="table-responsive-sm">
+        <table class="table table-gray table-bordered mt-3">
+          <thead class="bg-dark text-white table-dark">
+            <th class="p-2">Kategori Adı</th>
+            <th class="p-2">Düzenle</th>
+            <th class="p-2">Sil</th>
+          </thead>
+          <tbody class="bg-light">
+            <tr *ngFor="let kategori of kategoriler">
+              <td>{{ kategori.kategoriAdi }}</td>
+              <td>
+                <button class="btn btn-outline-primary" (click)="Duzenle(kategori,modalDuzenle)" [disabled]="user.admin == 0 ">Düzenle</button>
+              </td>
+              <td>
+                <button class="btn btn-outline-danger" (click)="Sil(kategori)" [disabled]="user.admin == 0 ">Sil</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="modal" tabindex="-1" #modalEkle>
+      <div class="modal-dialog">
+        <form [formGroup]="frm" (ngSubmit)="EkleKaydet()">
+          <div class="modal-content ">
+            <div class="modal-header bg-dark text-white">
+              <h5 class="modal-title">{{modalBaslik}}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label>Kategori Adi</label>
+                <input class="form-control" type="text" formControlName="kategoriAdi" />
+                <input type="hidden" formControlName="uid" />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <input type="submit" class="btn btn-outline-primary" value="Kaydet">
+              <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Kapat</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="modal" tabindex="-1" #modalDuzenle>
+      <div class="modal-dialog">
+        <form [formGroup]="frm" (ngSubmit)="DuzenleKaydet()">
+          <div class="modal-content ">
+            <div class="modal-header bg-dark text-white">
+              <h5 class="modal-title">{{modalBaslik}}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label>Kategori Adi</label>
+                <input class="form-control " type="text" formControlName="kategoriAdi" />
+                <input type="hidden" formControlName="uid" />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <input type="submit" class="btn btn-outline-primary" value="Kaydet">
+              <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Kapat</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

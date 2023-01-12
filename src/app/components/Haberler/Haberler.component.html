@@ -1,0 +1,131 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12"  *ngIf="uye | async as user">
+      <h3>Haberler</h3>
+      <button class="btn btn-outline-dark" (click)="Ekle(modalEkle)" [disabled]="user.admin == 0 ">Haber Ekle</button>
+      <div class="table-responsive-sm">
+        <table class="table table-gray table-bordered mt-3">
+          <thead class="bg-dark text-white table-dark">
+            <th class="p-2">Haber Resim</th>
+            <th class="p-2">Haber Yazan </th>
+            <th class="p-2">Haber Basligi</th>
+            <th class="p-2">Haber Manseti </th>
+            <th class="p-2">Düzenle</th>
+            <th class="p-2">Sil</th>
+            <th class="p-2">Resim Ekle</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let haber of haberler">
+              <td>
+                <img width="50px" [src]="haber.haberResim || 'assets/profil.png'" />
+              </td>
+              <td>{{haber.haberYazan}}</td>
+              <td>{{haber.haberBasligi}}</td>
+              <td>{{haber.haberManseti}}</td>
+              <td><button class=" btn btn-outline-warning" (click)="Duzenle(haber,modalDuzenle)"
+                  [disabled]="user.admin == 0 ">Düzenle</button></td>
+              <td>
+                <button class=" btn btn-outline-danger" (click)="Sil(haber)"
+                  [disabled]="user.admin == 0 ">Sil</button>
+              <td>
+                <input #inputField type="file" hidden (change)="ResimYukle($event, haber)" />
+                <button class="btn btn-primary" [disabled]="user.admin == 0 " (click)="inputField.click()">
+                  Resim Seç
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-12">
+  <div class="modal" tabindex="-1" #modalEkle>
+    <div class="modal-dialog">
+      <form [formGroup]="frm" (ngSubmit)="EkleKaydet()">
+        <div class="modal-content">
+          <div class="modal-header bg-dark text-white">
+            <h5 class="modal-title">{{modalBaslik}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Haber Yazan</label>
+              <select class="form-control" formControlName="haberYazan">
+                <option type="hidden" *ngIf="uye | async as user " [value]="user.displayName">
+                  {{user.displayName}}
+                </option>
+              </select>
+              <br />
+              <label>Haber Başlığı</label>
+              <input type="text" class="form-control" formControlName="haberBasligi">
+              <label>Haber Manseti</label>
+              <input type="text" class="form-control" formControlName="haberManseti">
+              <label>Haber Kategori</label>
+              <select class="form-control" formControlName="categoryId">
+                <option [value]="kat.uid" *ngFor="let kat of kategoriler">{{kat.kategoriAdi}}</option>
+              </select>
+              <label for="floatingTextarea">Haber Yazisi</label>
+              <div class="form-floating">
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
+                  formControlName="haberYazisi"></textarea>
+                <label for="floatingTextarea">Haber Yazisi</label>
+              </div>
+              <input type="hidden" class="form-control" formControlName="haberKayitTarihi">
+              <input type="hidden" class="form-control" formControlName="uid">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <input type="submit" class="btn btn-outline-primary" value="Kaydet">
+            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Kapat</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="col-md-12">
+  <div class="modal" tabindex="-1" #modalDuzenle>
+    <div class="modal-dialog">
+      <form [formGroup]="frm" (ngSubmit)="DuzenleKaydet()">
+        <div class="modal-content">
+          <div class="modal-header bg-dark text-white">
+            <h5 class="modal-title">{{modalBaslik}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Haber Yazan</label>
+              <input type="hidden" class="form-control" formControlName="haberYazan" *ngIf="uye | async as user "
+                [value]="user.displayName">
+              <label>Haber Başlığı</label>
+              <input type="text" class="form-control" formControlName="haberBasligi">
+              <label>Haber Manseti</label>
+              <input type="text" class="form-control" formControlName="haberManseti">
+              <label>Haber Kategori</label>
+              <select class="form-control" formControlName="categoryId">
+                <option [value]="kat.uid" *ngFor="let kat of kategoriler">{{kat.kategoriAdi}}</option>
+              </select>
+              <label for="floatingTextarea">Haber Yazisi</label>
+              <div class="form-floating">
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
+                  formControlName="haberYazisi"></textarea>
+                <label for="floatingTextarea">Haber Yazisi</label>
+              </div>
+
+
+              <input type="hidden" class="form-control" formControlName="haberKayitTarihi">
+              <input type="hidden" class="form-control" formControlName="uid">
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <input type="submit" class="btn btn-outline-primary" value="Kaydet">
+            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Kapat</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

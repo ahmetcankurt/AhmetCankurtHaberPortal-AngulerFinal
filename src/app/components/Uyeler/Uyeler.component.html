@@ -1,0 +1,68 @@
+<div class="container mt-5">
+  <div class="row" *ngIf="uye | async as user">
+    <div class="col-md-4" *ngIf="user.admin == 0">
+      <div class="alert alert-danger"  style="margin-top: 100px;">Bu Bölüme Girmeye Yetkiniz Yoktur!</div>
+    </div>
+    <div class="table-responsive-sm" *ngIf="user.admin == 1">
+      <table class="table table-gray table-bordered mt-3" >
+        <thead class="bg-dark text-white table-dark ">
+          <th class="p-2">Üye Fotosu</th>
+          <th class="p-2">Üye Adı</th>
+          <th class="p-2">Üye E-mail</th>
+          <th class="p-2">Adres</th>
+          <th class="p-2">Telefon</th>
+          <th class="p-2">Admin mi?</th>
+          <th class="p-2">Düzenle</th>
+          <th class="p-2">Sil</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let uye of uyeler">
+            <td><img [src]="uye.foto" width="50px" alt="Henüz Foto Yok." /></td>
+            <td>{{ uye.displayName }}</td>
+            <td>{{ uye.email }}</td>
+            <td>{{ uye.adres }}</td>
+            <td>{{ uye.tel }}</td>
+            <td>
+              <span class="badge bg-success" *ngIf="uye.admin == 1">Evet</span>
+              <span class="badge bg-danger" *ngIf="uye.admin == 0">Hayır</span>
+            </td>
+            <td><button class="btn btn-warning ms-3" (click)="Duzenle(uye, modalEkleDuzenle)">Düzenle</button></td>
+            <td><button class="btn btn-danger ms-3" (click)="Sil(uye)">Sil</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="modal" tabindex="-1" #modalEkleDuzenle> 
+  <div class="modal-dialog">
+    <form [formGroup]="frm" (ngSubmit)="UyeEkleDuzenle()">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title">{{ modalBaslik }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Üye Adı Soyadı</label>
+            <input type="text" readonly class="form-control" formControlName="displayName" />
+            <label>Üye E-Posta</label>
+            <input type="text" readonly class="form-control" formControlName="email" />
+
+            <label>Yönetici mi</label>
+            <select class="form-control" formControlName="admin">
+              <option value="1">Evet</option>
+              <option value="0">Hayır</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <input type="submit" class="btn btn-outline-primary" value="Kaydet" />
+          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+            Kapat
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+.shadows_Css:hover {
+  border-radius: 5px
+  ;
+  box-shadow: 5px 5px 5px 5px rgb(0 0 0 / 10%), 5px 5px 10px 10px rgb(0 0 0 / 10%);
+  padding: 10px;
+}
+.card{
+  padding: 10px;
+}
+
+.card-Css {
+  padding: 20px;
+  display: inline-block;
+  margin-top: 20px;
+}
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #1e2024);
+  z-index: 1;
+}
+.overlay__a {
+  color: #fff;
+  text-decoration: none;
+  background-color: gold;
+  margin-right: 10px;
+}
+.carousel-caption__h {
+  color: #fff;
+}

@@ -1,0 +1,65 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding: 0; ">
+  <div class="container-fluid" style="background-color: black; ">
+    <a class="navbar-brand" href="#"
+      style="background-color: gold; height: 70px; padding: 20px; font-weight: bold; ">MATAR NEWS</a>
+    <button class="navbar-toggler" type="button" style="background-color: gold;" data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-size: 20px;">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Anasayfa</a>
+        </li>
+        <li class="nav-item" *ngIf="uye | async as user">
+          <a class="nav-link active" aria-current="page" href="/uyeler">Üyeler</a>
+        </li>
+        <li class="nav-item" *ngIf="uye | async as user">
+          <a class="nav-link active" aria-current="page" href="/kategoriler">Kategoriler</a>
+        </li>
+        <li class="nav-item" *ngIf="uye | async as user">
+          <a class="nav-link active" aria-current="page" href="/haberler">Haberler</a>
+        </li>
+
+      </ul>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex ">
+        <li>
+          <div class="flex-shrink-0 dropdown " *ngIf="uye | async as user else loginButton"
+            style="color: white; background-color: gold; padding: 10px; border-radius: 10px;">
+            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <img width="45" class="rounded-circle" [src]="user.foto ?? 'assets/profil.png'" />
+            </a>
+            <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/profil">
+                  {{user.displayName}}</a>
+              </li>
+              <li class="nav-item mt-1">
+                <a class="nav-link active" href="/profil">Profile</a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#" (click)="OturumKapat()">Kapat</a>
+              </li>
+
+            </ul>
+          </div>
+          <ng-template #loginButton>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+              </li>
+            </ul>
+          </ng-template>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<router-outlet>
+</router-outlet>
